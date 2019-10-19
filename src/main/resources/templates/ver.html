@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title th:text="${titulo}">Insert title here</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+	<div class="container">
+		<div class="jumbotron" align="center" style="margin-top: 50px;">
+
+			<div class="card" style="width: 18rem;">
+				<img class="card-img-top"
+					th:if="${producto.foto != null && #strings.length(producto.foto)>0}"
+					th:src="@{/uploads/img/} + ${producto.foto}"
+					th:alt="${producto.nombre}" />
+				<div class="card-body">
+					<h5 class="card-title" th:text="${titulo}"></h5>
+				</div>
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item" th:text="${producto.nombre}"></li>
+					<li class="list-group-item" th:text="'Id: ' + ${producto.id}"></li>
+					<li class="list-group-item"
+						th:text="'Precio: ' + ${#numbers.formatCurrency(producto.precio)}"></li>
+					<li class="list-group-item"
+						th:text="'Fecha: ' + ${#calendars.format(producto.createAt, 'dd/MM/yyyy')}"></li>
+				</ul>
+				<div class="card-body">
+					<a th:href="@{/listar}">volver</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

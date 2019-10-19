@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title th:text="${titulo}">Insert title here</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+</head>
+<body>
+	<div class="container">
+		<div class="jumbotron" align="center" style="margin-top: 50px;">
+			<h1 th:text="${titulo}"></h1>
+
+			<div>
+				<a th:href="@{/listar}">volver</a>
+
+				<form th:action="@{/form}" method="post" th:object="${producto}"
+					enctype="multipart/form-data">
+					<input th:if="${producto.id != null}" type="hidden"
+						th:field="*{id}" /> <input th:if="${producto.foto != null}"
+						type="hidden" th:field="*{foto}" />
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="inputGroup-sizing-default">Nombre</span>
+						</div>
+						<input type="text" class="form-control"
+							aria-label="Exemplo do tamanho do input"
+							aria-describedby="inputGroup-sizing-default" th:field="*{nombre}">
+						<small th:if="${#fields.hasErrors('nombre')}"
+							th:errors="*{nombre}"></small>
+					</div>
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="inputGroup-sizing-default">Precio</span>
+						</div>
+						<input type="text" class="form-control"
+							aria-label="Exemplo do tamanho do input"
+							aria-describedby="inputGroup-sizing-default" th:field="*{precio}">
+						<small th:if="${#fields.hasErrors('precio')}"
+							th:errors="*{precio}"></small>
+					</div>
+
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="inputGroup-sizing-default">Fecha</span>
+						</div>
+						<input type="text" class="form-control"
+							aria-label="Exemplo do tamanho do input"
+							aria-describedby="inputGroup-sizing-default"
+							th:field="*{createAt}">
+					</div>
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="inputGroup-sizing-default">Categoria</span>
+						</div>
+						<select id="categoria.id" class="form-control"
+							th:field="*{categoria.id}">
+							<option value="">-- seleccionar --</option>
+							<option th:each="categoria: ${categorias}"
+								th:value="${categoria.id}" th:text="${categoria.nombre}"></option>
+						</select> <small th:if="${#fields.hasErrors('categoria.id')}"
+							th:errors="*{categoria.id}"></small>
+					</div>
+					<div class="input-group mb-3" style="display: flex; align-items: center;">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="inputGroup-sizing-default">Foto</span>
+						</div>
+						<input style="margin-left: 3px;" type="file" name="file" />
+					</div>
+					<div style="float: right;">
+						<input type="submit" class="btn btn-primary" th:value="${boton}" />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title th:text="${titulo}">Insert title here</title>
+<link href="webjars/bootstrap/4.1.3/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+	<div class="container">
+		<div class="jumbotron" align="center" style="margin-top: 50px;">
+
+			<div th:if="${param.error != null}" th:text="${param.error}"></div>
+			<div th:if="${param.success != null}" th:text="${param.success}"></div>
+
+			<h1 th:text="${titulo}"></h1>
+			<a th:href="@{/form}">Crear <i class="fa fa-plus"></i></a>
+			<table class="table table-striped">
+				<thead class="thead-dark">
+					<tr>
+						<th>id</th>
+						<th>nombre</th>
+						<th>precio</th>
+						<th>fecha</th>
+						<th>categoría</th>
+						<th>editar</th>
+						<th>eliminar</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="producto: ${productos}">
+						<td><a th:href="@{/ver/} + ${producto.id}"
+							><i class="fa fa-search"></i></a></td>
+						<td th:text="${producto.nombre}"></td>
+						<td th:text="${#numbers.formatCurrency(producto.precio)}"></td>
+						<td
+							th:text="${#calendars.format(producto.createAt, 'dd/MM/yyyy')}"></td>
+						<td th:text="${producto.categoria.nombre}"></td>
+						<td><a th:href="@{/form/} + ${producto.id}"><i class="fa fa-edit"></i></a></td>
+						<td><a th:href="@{/eliminar/} + ${producto.id}"
+							onclick="return confirm('estas seguro que desea eliminar?');"><i class="fa fa-trash"></i></a></td>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+	</div>
+</body>
+</html>
